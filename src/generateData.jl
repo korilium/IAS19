@@ -9,12 +9,23 @@ describe(df)
 
 length = size(df)[1] 
 
-#parameters 
+############
+#parameters#
+############
+
 n = 30 
 seedValue = 666
 Random.seed!(seedValue)
 workingAge = 18 
 legalRetirmentAge = 67 
+# formula 
+S1 = 2100
+S2 = 99999
+
+
+
+
+
 
 randomIndices = sample(1:length, n ,replace=false)
 
@@ -39,6 +50,11 @@ for age in Age
     push!(pst, Pst)
 end 
 
-Beneficiary[:, "pst"] = pst
+Beneficiary[:, "pst"] .= 0
 
 Beneficiary[:, "tst"] = .- pst .+ legalRetirmentAge .- workingAge
+
+
+Beneficiary
+
+
