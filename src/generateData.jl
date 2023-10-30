@@ -1,4 +1,4 @@
-using CSV, DataFrames, Statistics, StatsBase, Random
+using CSV, DataFrames, Statistics, StatsBase, Random, Dates
 
 ######
 #data#
@@ -12,10 +12,11 @@ df = CSV.File("data/names.csv") |> DataFrame
 n = 30 
 seedValue = 666
 Random.seed!(seedValue)
-workingAge = 18 
-legalRetirmentAge = 67 
-newPlan = 1 
-
+workingAge = 25 
+legalRetAge = 67 
+newPlan = 0 
+BOY = Date(Year(now()).value, 1, 1)
+EOY = Date(Year(now()).value, 12, 31)
 minSal= 2100*12
 maxSal=  10000*12
 # formula 
@@ -25,42 +26,47 @@ a = 0.03
 b = 0.07 
 
 
-
 #################
 #generating data#
 #################
 
-randomIndices = sample(1:length, n ,replace=false)
+# Generate a random index
+random_index = rand(1:size(df, 1))
 
+# sample based on index 
+randomIndices = sample(1:size(df,1),n ,replace=false)
 Beneficiary = df[randomIndices,:]
 
+#generate age and salary 
 Salary = rand(minSal:maxSal,n)
-Age = rand(workingAge:legalRetirmentAge, n)
-tx = rand([1,1,1,0.8,0.5],n)
+Age = rand(workingAge:legalRetAge, n)
 
 
-if newPlan == 0 
-    pst = []
-    for age in Age 
-        proportion = rand()
-        chance1= rand()
-        chance2 = rand()
-        if (proportion > chance1) & (proportion > chance2) 
-            Pst = (age - workingAge) * proportion
-        else 
-            Pst = age - workingAge
-        end 
-        Pst = round(Pst, digits = 2)
-        push!(pst, Pst)
-    end 
-else
-    Beneficiary[:, "pst"] .= 0
+################
+# service time #
+################
+
+DOB = Date.(Dates.year(BOY) .- Age, rand(1:12,n), rand(1:28,n))
+
+PBE = []  #period before entry 
+for i in Age 
+    perBefEnt = rand(workingAge:i)
+    append!(PBE,perBefEnt)
 end 
 
-Beneficiary[:, "tst"] = .- pst .+ legalRetirmentAge .- workingAge
-Beneficiary[:,"tx"] = tx
-Beneficiary[:, "salary"] = Salary 
+DOE  = Date.(Dates.year.(DOB) .+ PBE, rand(1:12,n), rand(1:28,n))
+tx = rand([1,1,1,1,1,0.8,0.8,0.5],n)
+
+pst =  Dates.year.(BOY) .- Dates.year.(DOE)
+
 Beneficiary[:, "age"] = Age
+Beneficiary[:, "DOB"] = DOB 
+Beneficiary[:,"DOE"] = DOE
+Beneficiary[:, "salary"] = Salary 
+Beneficiary[:, "pst"] = pst
+Beneficiary[:, "tst"] = pst .+ legalRetAge .- workingAge
+Beneficiary[:,"tx"] = tx
+
 
 
 Beneficiary
