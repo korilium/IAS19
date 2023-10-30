@@ -8,4 +8,6 @@ Intended to help with calculation around IAS19 reporting on employee benefits
 * evaluate plan
 * visualize the status of the plan
 * add sensibility analysis (building scenarios/stress testing)
-* create generic functions to enable the ease of the workflow  
+* create generic functions to enable the ease of the workflow
+* make documentation
+* run pipelines to test functions and data 
