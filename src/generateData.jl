@@ -21,7 +21,7 @@ minSal= 2100*12
 maxSal=  10000*12
 # formula 
 S1 = 2100
-S2 = 99999
+S2(x)= x .- S1
 a = 0.03
 b = 0.07 
 
@@ -68,5 +68,17 @@ Beneficiary[:, "tst"] = pst .+ legalRetAge .- workingAge
 Beneficiary[:,"tx"] = tx
 
 
+#########################
+# reserves and premiums #
+#########################
 
+prem = (a*S1 .+ b.*(S2(Salary))).* tx  
+
+res 
+
+
+
+######
+#WAP#
+######  
 Beneficiary
