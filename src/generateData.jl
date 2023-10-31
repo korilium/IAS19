@@ -1,5 +1,18 @@
 using CSV, DataFrames, Statistics, StatsBase, Random, Dates
 
+
+#############
+#description#
+#############
+
+# current data is made for a DC plan where death and life benefit are seperalty calcualted (not mixed)
+# there is no insured reserve 
+
+
+
+
+
+
 ######
 #data#
 ######
@@ -37,9 +50,10 @@ random_index = rand(1:size(df, 1))
 randomIndices = sample(1:size(df,1),n ,replace=false)
 Beneficiary = df[randomIndices,:]
 
-#generate age and salary 
+#generate age, sex and salary 
 Salary = rand(minSal:maxSal,n)
 Age = rand(workingAge:legalRetAge, n)
+Sex = rand([1,2], n)
 
 
 ################
@@ -68,15 +82,17 @@ Beneficiary[:, "tst"] = pst .+ legalRetAge .- workingAge
 Beneficiary[:,"tx"] = tx
 
 
-#########################
-# reserves and premiums #
-#########################
+##################################
+# capital, reserves and premiums #
+##################################
 
-prem = (a*S1 .+ b.*(S2(Salary))).* tx  
+randScale(n, shift, scale) = (rand(n).+shift).*scale
 
-res 
+prem = (a*S1 .+ b.*(S2(Salary))).* tx  .+ randScale(n,-0.5,0.05).*Salary
 
+cap = pst .* prem + pst .* prem .* randScale(n,-0.5, 0.1)
 
+pst
 
 ######
 #WAP#
