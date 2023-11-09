@@ -6,7 +6,8 @@ using CSV, DataFrames, Statistics, StatsBase, Random, Dates
 #############
 
 # current data is made for a DC plan where death and life benefit are seperalty calcualted (not mixed)
-# there is no insured reserve 
+# there is no insured reserve yet it is a new plan that came into fruition. 
+# the goal wuold be to make a program in which things evolve with each iteration 
 
 
 
@@ -50,11 +51,11 @@ random_index = rand(1:size(df, 1))
 randomIndices = sample(1:size(df,1),n ,replace=false)
 Beneficiary = df[randomIndices,:]
 
-#generate age, sex and salary 
+#generate age, sex, status and salary 
 Salary = rand(minSal:maxSal,n)
 Age = rand(workingAge:legalRetAge, n)
 Sex = rand([1,2], n)
-
+Status = rand(["ACT", "DEF"], n)
 
 ################
 # service time #
@@ -74,11 +75,13 @@ tx = rand([1,1,1,1,1,0.8,0.8,0.5],n)
 pst =  Dates.year.(BOY) .- Dates.year.(DOE)
 
 Beneficiary[:, "age"] = Age
+Beneficiary[:, " sex"] = Sex
 Beneficiary[:, "DOB"] = DOB 
 Beneficiary[:,"DOE"] = DOE
 Beneficiary[:, "salary"] = Salary 
+Beneficiary[:, "status"] = Status
 Beneficiary[:, "pst"] = pst
-Beneficiary[:, "tst"] = pst .+ legalRetAge .- workingAge
+Beneficiary[:, "tst"] =  legalRetAge .- workingAge .- pst
 Beneficiary[:,"tx"] = tx
 
 
@@ -90,11 +93,12 @@ randScale(n, shift, scale) = (rand(n).+shift).*scale
 
 prem = (a*S1 .+ b.*(S2(Salary))).* tx  .+ randScale(n,-0.5,0.05).*Salary
 
-cap = pst .* prem + pst .* prem .* randScale(n,-0.5, 0.1)
+cap = zeros(n)
 
-pst
 
-######
-#WAP#
-######  
+
+Beneficiary[:, "Total Capital"] = cap
+Beneficiary[:, "premie"] = prem
 Beneficiary
+
+CSV.write("data/data2023.csv", Beneficiary)
