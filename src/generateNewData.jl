@@ -5,7 +5,7 @@ using CSV, DataFrames, Statistics, StatsBase, Random, Dates
 #description#
 #############
 
-# current data is made for a DC plan where death and life benefit are seperalty calcualted (not mixed)
+# current data is made for a DC plan where death and life benefit are seperalty calculated (not mixed)
 # there is no insured reserve yet it is a new plan that came into fruition. 
 # the goal wuold be to make a program in which things evolve with each iteration 
 
