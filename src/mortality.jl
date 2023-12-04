@@ -51,18 +51,26 @@ mr= MortBel("MR")
 fr= MortBel("FR")
 
 survival(mk, 25,70)
-survival(fk, 20,70)
-survival(mr, 20,70)
-survival(fr, 20,70)
+survival(fk, 25,70)
+survival(mr, 25,70)
+survival(fr, 25,70)
 issueAge = 25 
 
 # comapre against other tables 
 
 #MK
-k = 1000266.63
-s = 0.999441703848
-g = 0.999733441115
-c = 1.101077536030
+k = 1000450.59
+s = 0.999106875782
+g = 0.999549614043
+c = 1.103798111448
+
+########
+##-FK-##
+########
+k = 1000097.39
+s = 0.999257048061 
+g = 0.999902624311
+c = 1.118239062025
 
 l(x) = k * s^x * g^c^x
 l(70)/l(25)
