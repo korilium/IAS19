@@ -42,8 +42,6 @@ julia> survival(m, 20, 65)
 
 
 """
-
-
 function MortBel(type ="MK")
 
     if type == "MR"   
