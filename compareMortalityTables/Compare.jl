@@ -17,7 +17,7 @@ survival(mr, 25,70)
 survival(fr, 25,70)
 issueAge = 25 
 
-# comapre against other tables 
+# compare against other tables 
 
 #MK
 k = 1000450.59

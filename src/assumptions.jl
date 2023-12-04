@@ -4,12 +4,6 @@ discRate = 0.035
 infRate = 0.02 
 salIncr = 0.005
 
-#################
-### Mortality ###
-#################
-
-mortF = MortalityTables.table("1988-1990 FK - Female")
-mortM = MortalityTables.table("1988-90 MR - Male")
 
 mortM.select[30]
 ####################
