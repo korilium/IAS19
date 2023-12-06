@@ -1,5 +1,11 @@
 
-using CSV, DataFrames, Statistics, StatsBase, Random, Dates
+using   CSV, 
+        DataFrames, 
+        Statistics, 
+        StatsBase, 
+        Random, 
+        Dates, 
+        LifeContingencies
 
 include("../src/functions.jl")
 ######
@@ -22,6 +28,11 @@ fr= MortBel("FR")
 ### test case ###
 #################
 
+age= 35 
+
+
+
+SingleLife(mk(age))
 
 
 #######################
