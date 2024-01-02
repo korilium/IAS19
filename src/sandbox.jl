@@ -32,9 +32,16 @@ fr= MortBel("FR")
 ### test case ###
 #################
 
-age= 35 
+age= 35:45
 
 
+
+vbt2001 = MortalityTables.table("2001 VBT Residual Standard Select and Ultimate - Male Nonsmoker, ANB")
+
+issue_age = 30
+life = SingleLife(                 # The life underlying the risk
+    mortality = vbt2001.select[issue_age],    # -- Mortality rates
+)
 
 life= SingleLife(mk(age))
 
