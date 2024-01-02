@@ -5,9 +5,13 @@ using   CSV,
         StatsBase, 
         Random, 
         Dates, 
-        LifeContingencies
+        LifeContingencies, 
+        MortalityTables, 
+        FinanceModels
 
 include("../src/functions.jl")
+include("../src/assumptions.jl")
+
 ######
 #data#
 ######
@@ -32,10 +36,18 @@ age= 35
 
 
 
-SingleLife(mk(age))
+life= SingleLife(mk(age))
+
+yield = FinanceModels.Yield.Constant(DR)
+lc = LifeContingency(life,yield )
+
+
+ins= Insurance(lc)
+collect(cashflows(ins))
+survival(ins)
 
 
 #######################
-### first iteration ###
+### first iteration/ normal evaluation ###
 #######################
 

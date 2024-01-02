@@ -1,11 +1,13 @@
 using MortalityTables, DataFrames
 
-discRate = 0.035
-infRate = 0.02 
-salIncr = 0.005
+DR = 0.035
+infl = 0.02 
+SI = 0.005
+LegCeil = 71519.98	
+WAPRate = 0.0175
 
+insured_reserves = 0.02
 
-mortM.select[30]
 ####################
 ## Turnover table ##
 ####################

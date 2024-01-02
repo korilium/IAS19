@@ -23,7 +23,7 @@ df = CSV.File("data/names.csv") |> DataFrame
 #parameters#
 ############
 
-n = 30 
+n = 45
 seedValue = 666
 Random.seed!(seedValue)
 workingAge = 25 
@@ -48,7 +48,7 @@ b = 0.07
 random_index = rand(1:size(df, 1))
 
 # sample based on index 
-randomIndices = sample(1:size(df,1),n ,replace=false)
+randomIndices = sample(1:size(df,1),n )
 Beneficiary = df[randomIndices,:]
 
 #generate age, sex, status and salary 
@@ -69,7 +69,8 @@ for i in Age
     append!(PBE,perBefEnt)
 end 
 
-DOE  = Date.(Dates.year.(DOB) .+ PBE, rand(1:12,n), rand(1:28,n))
+#DOE  = Date.(Dates.year.(DOB) .+ PBE, rand(1:12,n), rand(1:28,n))
+DOE = repeat([BOY - Year(1)], n)
 tx = rand([1,1,1,1,1,0.8,0.8,0.5],n)
 
 pst =  Dates.year.(BOY) .- Dates.year.(DOE)
@@ -93,7 +94,7 @@ randScale(n, shift, scale) = (rand(n).+shift).*scale
 
 prem = (a*S1 .+ b.*(S2(Salary))).* tx  .+ randScale(n,-0.5,0.05).*Salary
 
-cap = zeros(n)
+cap = prem * 1.02^(1/2)
 
 
 
